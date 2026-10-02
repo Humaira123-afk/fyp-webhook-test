@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>Login</h2>
+  <form id="loginForm">
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Password" required minlength="6" />
+    <button type="submit">Login</button>
+    <p id="error" style="color:red"></p>
+  </form>
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const res = await fetch("/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: document.getElementById("email").value,
+          password: document.getElementById("password").value,
+        }),
+      });
+      if (!res.ok) document.getElementById("error").textContent = "Invalid email or password";
+    });
+  </script>
+</body>
+</html>
